@@ -7,12 +7,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24 break-all">
-      {JSON.stringify(session)}
-      {session && session.user ? (
-        <p>{session.user.name}</p>
-      ) : (
-        <p>{JSON.stringify(session?.user)}</p>
-      )}
+      <p>{session?.user.username}</p>
     </main>
   );
 }
