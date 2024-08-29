@@ -8,10 +8,10 @@ declare module "next-auth" {
     role: string;
     access_token: string;
     refresh_token: string;
+    expiration_time: number;
   }
   interface Session extends DefaultSession {
     user: User;
-    expires: string;
   }
 }
 
