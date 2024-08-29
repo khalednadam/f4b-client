@@ -28,19 +28,7 @@ export default function AuthLayout({
         <CardHeader>
           <CardTitle>{isLogin ? "Login" : "Register"}</CardTitle>
         </CardHeader>
-        <CardContent>{children}</CardContent>
-        <CardFooter className="flex flex-col w-full">
-          {isLogin ? (
-            <Link href="/signup">
-              <Button variant="link">Don't have an account? Create one</Button>
-            </Link>
-          ) : (
-            <Link href="/login">
-              <Button variant="link">Already have an account? Login</Button>
-            </Link>
-          )}
-          <Button className="w-full">{isLogin ? "Login" : "Register"}</Button>
-        </CardFooter>
+        {children}
       </Card>
     </main>
   );
