@@ -8,8 +8,11 @@ import { CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 import httpStatus from "http-status";
+import { useToast } from "@/components/ui/use-toast";
 
 const SignUpPage = () => {
+  const { toast } = useToast();
+
   const email = useRef("");
   const username = useRef("");
   const password = useRef("");
@@ -30,6 +33,11 @@ const SignUpPage = () => {
       },
     });
     if (res.status !== httpStatus.CREATED) {
+      toast({
+        title: "Failed",
+        description: res.statusText,
+        variant: "destructive",
+      });
       return null;
     }
     console.log(res);

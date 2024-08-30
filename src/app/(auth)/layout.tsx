@@ -1,16 +1,9 @@
 "use client";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardHeader, CardTitle } from "@/components/ui/card";
 import "../globals.css";
-import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function AuthLayout({
   children,
@@ -30,6 +23,7 @@ export default function AuthLayout({
         </CardHeader>
         {children}
       </Card>
+      <Toaster />
     </main>
   );
 }

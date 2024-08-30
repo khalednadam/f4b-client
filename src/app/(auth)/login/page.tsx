@@ -7,19 +7,33 @@ import { Icon } from "@iconify-icon/react";
 import { signIn } from "next-auth/react";
 import { CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
+import httpStatus from "http-status";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const { toast } = useToast();
   const email = useRef("");
   const password = useRef("");
+  const router = useRouter();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onSubmit = async () => {
-    await signIn("credentials", {
+    const res = await signIn("credentials", {
       email: email.current,
       password: password.current,
-      redirect: true,
+      redirect: false,
       callbackUrl: "/",
     });
+    if (!res?.ok) {
+      toast({
+        title: "Failed",
+        description: "Email or password is wrong!",
+        variant: "destructive",
+      });
+      return null;
+    }
+    router.push("/");
   };
 
   return (
