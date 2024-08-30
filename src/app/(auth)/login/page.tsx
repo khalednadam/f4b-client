@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const onSubmit = async () => {
-    const result = await signIn("credentials", {
+    await signIn("credentials", {
       email: email.current,
       password: password.current,
       redirect: true,

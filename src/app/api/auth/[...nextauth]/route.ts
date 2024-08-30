@@ -1,6 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import { JWT } from "next-auth/jwt";
 import CredentialsProvider from "next-auth/providers/credentials";
+import httpStatus from "http-status";
 
 async function refreshToken(token: JWT): Promise<JWT> {
   const res = await fetch("http://localhost:3000/auth/refresh", {
@@ -46,7 +47,7 @@ export const authOptions: NextAuthOptions = {
             "Content-Type": "application/json",
           },
         });
-        if (res.status == 401) {
+        if (res.status !== httpStatus.CREATED) {
           return null;
         }
         const user = await res.json();
