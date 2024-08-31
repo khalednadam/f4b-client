@@ -20,19 +20,30 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { PasswordChecklist } from "@/components/PasswordChecklist";
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 const PASSWORD_REGEX: RegExp = new RegExp(
-  "/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*W)(?!.* ).{8,}$/"
+  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?!.* ).{8,}$"
 );
+const USERNAME_REGEX: RegExp = new RegExp(
+  "^[a-zA-Z0-9](?!.*[._]{2})[a-zA-Z0-9._]{0,28}[a-zA-Z0-9]$"
+);
+
 const FormSchema = z
   .object({
     email: z.string().min(1, "Email is required").email("Invalid email"),
-    username: z.string().min(1, "Username is required"),
+    username: z
+      .string()
+      .min(1, "Username is required")
+      .regex(
+        USERNAME_REGEX,
+        "2-30 characters, alphanumeric, dots and underscores allowed (no consecutive dots/underscores)."
+      ),
+
     password: z
       .string()
       .min(1, "Password is required")
-      .regex(PASSWORD_REGEX, ""),
+      .regex(PASSWORD_REGEX, "password must match"),
     passwordConfirmation: z
       .string()
       .min(1, "Password confirmation is required"),
@@ -60,32 +71,47 @@ const SignUpPage = () => {
     useState(false);
   const [isPasswordFieldFocused, setIsPasswordFieldFocused] = useState(false);
   const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-    const res = await fetch(`http://localhost:3000/users/register`, {
-      method: "POST",
-      body: JSON.stringify({
-        email: values.email,
-        username: values.username,
-        password: values.password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (res.status !== httpStatus.CREATED) {
+    try {
+      const res = await fetch(`http://localhost:3000/users/register`, {
+        method: "POST",
+        body: JSON.stringify({
+          email: values.email,
+          username: values.username,
+          password: values.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (res.status !== httpStatus.CREATED) {
+        toast({
+          title: "Failed",
+          description: res.statusText,
+          variant: "destructive",
+        });
+        return null;
+      }
+      try {
+        await signIn("credentials", {
+          email: values.email,
+          password: values.password,
+          redirect: true,
+          callbackUrl: "/",
+        });
+      } catch (err) {
+        console.log(err);
+        toast({
+          title: "Failed",
+          description: "Failed to login",
+        });
+      }
+    } catch (err) {
+      console.log(err);
       toast({
         title: "Failed",
-        description: res.statusText,
-        variant: "destructive",
+        description: "Failed to register",
       });
-      return null;
     }
-    console.log(res);
-    await signIn("credentials", {
-      email: values.email,
-      password: values.password,
-      redirect: true,
-      callbackUrl: "/",
-    });
   };
 
   return (
@@ -113,7 +139,7 @@ const SignUpPage = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="@username" {...field} />
+                    <Input placeholder="username" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
