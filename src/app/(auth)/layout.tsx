@@ -16,24 +16,28 @@ export default function AuthLayout({
     setIsLogin(path === "/login");
   }, [path]);
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary/70">
-      <AnimatePresence>
-        <motion.div
-          initial={{ opacity: 0, y: 90 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 90 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Card className="w-[350px]">
-            <CardHeader>
-              <CardTitle>{isLogin ? "Login" : "Register"}</CardTitle>
-            </CardHeader>
-            <motion.div>{children}</motion.div>
-          </Card>
-        </motion.div>
-      </AnimatePresence>
+    <html>
+      <body>
+        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary/70">
+          <AnimatePresence>
+            <motion.div
+              initial={{ opacity: 0, y: 90 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 90 }}
+              transition={{ duration: 0.5 }}
+            >
+              <Card className="w-[350px]">
+                <CardHeader>
+                  <CardTitle>{isLogin ? "Login" : "Register"}</CardTitle>
+                </CardHeader>
+                <motion.div>{children}</motion.div>
+              </Card>
+            </motion.div>
+          </AnimatePresence>
 
-      <Toaster />
-    </main>
+          <Toaster />
+        </main>
+      </body>
+    </html>
   );
 }
