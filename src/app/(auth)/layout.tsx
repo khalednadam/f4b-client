@@ -18,7 +18,7 @@ export default function AuthLayout({
   return (
     <html>
       <body>
-        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary/70">
+        <main className="flex min-h-screen flex-col items-center justify-center p-24 bg-primary/70 overflow-hidden">
           <AnimatePresence>
             <motion.div
               initial={{ opacity: 0, y: 90 }}

@@ -29,7 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
-            <main className="flex items-start justify-between">
+            <main className="flex items-start justify-between ">
               <SideNavBar />
               <div className="w-full">
                 <Header />
