@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import {
   Bookmark,
@@ -15,7 +15,14 @@ import NavBarItem from "./NavBarItem";
 import { motion } from "framer-motion";
 
 const SideNavBar = () => {
-  const [isMini, setIsMini] = useState(true);
+  const [isMini, setIsMini] = useState<boolean>(() => {
+    const savedState = localStorage.getItem("f4bSidebar");
+    return savedState ? JSON.parse(savedState) : true;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("f4bSidebar", JSON.stringify(isMini));
+  }, [isMini]);
 
   return (
     <motion.div
@@ -23,7 +30,7 @@ const SideNavBar = () => {
       animate={{
         width: isMini ? "75px" : "200px",
       }}
-      initial={{ width: "75px" }}
+      initial={{ width: isMini ? "75px" : "200px" }}
       transition={{ duration: 0.2 }}
     >
       <div className="grow flex flex-col text-start justify-start">
