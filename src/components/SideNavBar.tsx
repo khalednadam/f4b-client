@@ -21,12 +21,12 @@ const SideNavBar = () => {
     <motion.div
       className={`h-full border-r-2 min-h-screen sticky top-0 flex flex-col p-4`}
       animate={{
-        width: isMini ? "90px" : "300px",
+        width: isMini ? "75px" : "200px",
       }}
-      initial={{ width: "90px" }}
-      transition={{ duration: 0.4 }}
+      initial={{ width: "75px" }}
+      transition={{ duration: 0.2 }}
     >
-      <div className="grow w-full">
+      <div className="grow flex flex-col text-start justify-start">
         <NavBarItem Icon={<Home />} Text="Home" isMini={isMini} />
         <NavBarItem Icon={<TrendingUp />} Text="Trending" isMini={isMini} />
         <NavBarItem Icon={<Search />} Text="Search" isMini={isMini} />

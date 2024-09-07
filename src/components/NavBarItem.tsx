@@ -1,21 +1,36 @@
 import React from "react";
 import { Button } from "./ui/button";
+import { AnimatePresence, motion } from "framer-motion";
 
 interface NavBarItemProps {
-  isMini: Boolean;
+  isMini: boolean;
   Icon: React.ReactNode;
-  Text: String;
+  Text: string;
 }
 
 const NavBarItem = ({ isMini, Icon, Text }: NavBarItemProps) => {
   return (
     <Button
       variant="ghost"
-      className={`w-full gap-2 ${isMini ? "justify-center" : "justify-start"}`}
+      className={`gap-2 justify-start`}
       size={isMini ? "icon" : "default"}
     >
-      {Icon}
-      {!isMini && Text}
+      <div className={`${isMini && "flex justify-center items-center mx-2"}`}>
+        {Icon}
+      </div>
+
+      <AnimatePresence>
+        {!isMini && (
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+          >
+            {Text}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </Button>
   );
 };
