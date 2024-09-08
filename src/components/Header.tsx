@@ -1,9 +1,8 @@
-// "use client";
 import React from "react";
 import Logo from "./Logo";
 import SignOutButton from "./SignOutButton";
 import { ThemeSwitch } from "./ui/ThemeSwitch";
-import MobileSideBarButton from "./MobileSideBarButton";
+import MobileSideBarButton from "./SideNavBar/MobileSideBarButton";
 
 const Header = () => {
   return (
