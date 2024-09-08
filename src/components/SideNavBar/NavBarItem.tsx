@@ -1,14 +1,14 @@
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { AnimatePresence, motion } from "framer-motion";
 
 interface NavBarItemProps {
-  isMini: boolean;
+  isMini?: boolean;
   Icon: React.ReactNode;
   Text: string;
 }
 
-const NavBarItem = ({ isMini, Icon, Text }: NavBarItemProps) => {
+const NavBarItem = ({ isMini = false, Icon, Text }: NavBarItemProps) => {
   return (
     <Button
       variant="ghost"

@@ -1,9 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import {
   Bookmark,
-  ChevronLeft,
   ChevronRight,
   Home,
   Search,
@@ -16,6 +15,8 @@ import NavBarItem from "./NavBarItem";
 import { AnimatePresence, motion } from "framer-motion";
 import useDisplay from "@/utils/useDisplay";
 import { useMobileSideBarStore } from "@/store/mobileSideBar";
+import SideNavBarMenuItems from "./SideNavBarMenuItems";
+import MinimizeSideBarButton from "./MinimizeSideBarButton";
 
 const SideNavBar = () => {
   const mdAndUp = useDisplay();
@@ -45,33 +46,12 @@ const SideNavBar = () => {
           transition={{ duration: 0.2 }}
         >
           <div className="grow flex flex-col text-start justify-start">
-            <NavBarItem Icon={<Home />} Text="Home" isMini={isMini} />
-            <NavBarItem Icon={<TrendingUp />} Text="Trending" isMini={isMini} />
-            <NavBarItem Icon={<Search />} Text="Search" isMini={isMini} />
-            <NavBarItem Icon={<Bookmark />} Text="Saved" isMini={isMini} />
-            <NavBarItem Icon={<User />} Text="Profile" isMini={isMini} />
+            <SideNavBarMenuItems isMini={isMini} />
           </div>
           <div>
             <NavBarItem Icon={<Settings />} Text="Settings" isMini={isMini} />
           </div>
-          <AnimatePresence>
-            <Button
-              onClick={() => setIsMini(!isMini)}
-              size="icon"
-              variant="secondary"
-              className="absolute bottom-20 -right-5 rounded-full z-50 "
-            >
-              <motion.div
-                animate={{
-                  rotate: isMini ? "0deg" : "180deg",
-                }}
-                initial={{ rotate: isMini ? "0deg" : "180deg" }}
-                transition={{ duration: 0.2 }}
-              >
-                <ChevronRight className="mx-auto" />
-              </motion.div>
-            </Button>
-          </AnimatePresence>
+          <MinimizeSideBarButton isMini={isMini} setIsMini={setIsMini} />
         </motion.div>
       ) : (
         <>
@@ -100,30 +80,10 @@ const SideNavBar = () => {
                   transition={{ duration: 0.1 }}
                 >
                   <div className="grow flex flex-col text-start justify-start">
-                    <NavBarItem Icon={<Home />} Text="Home" isMini={false} />
-                    <NavBarItem
-                      Icon={<TrendingUp />}
-                      Text="Trending"
-                      isMini={false}
-                    />
-                    <NavBarItem
-                      Icon={<Search />}
-                      Text="Search"
-                      isMini={false}
-                    />
-                    <NavBarItem
-                      Icon={<Bookmark />}
-                      Text="Saved"
-                      isMini={false}
-                    />
-                    <NavBarItem Icon={<User />} Text="Profile" isMini={false} />
+                    <SideNavBarMenuItems />
                   </div>
                   <div>
-                    <NavBarItem
-                      Icon={<Settings />}
-                      Text="Settings"
-                      isMini={false}
-                    />
+                    <NavBarItem Icon={<Settings />} Text="Settings" />
                   </div>
                 </motion.div>
               </motion.div>

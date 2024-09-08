@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { Menu } from "lucide-react";
 import { useMobileSideBarStore } from "@/store/mobileSideBar";
 import useDisplay from "@/utils/useDisplay";
@@ -12,13 +12,11 @@ const MobileSideBarButton = () => {
   );
 
   return (
-    <>
-      {!mdAndUp && (
-        <Button onClick={() => toggleIsOpen()} size="icon" variant="outline">
-          <Menu />
-        </Button>
-      )}
-    </>
+    !mdAndUp && (
+      <Button onClick={() => toggleIsOpen()} size="icon" variant="outline">
+        <Menu />
+      </Button>
+    )
   );
 };
 
