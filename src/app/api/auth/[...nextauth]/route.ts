@@ -15,7 +15,11 @@ async function refreshToken(token: JWT): Promise<JWT> {
   const response = await res.json();
   return {
     ...token,
-    response,
+    user: {
+      ...token.user,
+      access_token: response.access_token,
+      expiration_time: response.expiration_time,
+    },
   };
 }
 
@@ -63,9 +67,13 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({ token, user }) {
-      if (user) return { ...token, user };
-      if (new Date().getTime() < token.user.expiration_time) return token;
-      return await refreshToken(token);
+      if (user) {
+        return { ...token, user };
+      }
+      if (new Date().getTime() < token.user.expiration_time) {
+        return token;
+      }
+      return refreshToken(token);
     },
     async session({ session, token }) {
       session.user = token.user;
